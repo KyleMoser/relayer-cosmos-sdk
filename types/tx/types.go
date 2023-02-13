@@ -104,6 +104,7 @@ func (t *Tx) GetSigners() []sdk.AccAddress {
 
 	for _, msg := range t.GetMsgs() {
 		for _, addr := range msg.GetSigners() {
+			fmt.Printf("tx.GetSigners(): Msg: %s, Signer: %s\n", msg.String(), addr.String())
 			if !seen[addr.String()] {
 				signers = append(signers, addr)
 				seen[addr.String()] = true
@@ -113,6 +114,9 @@ func (t *Tx) GetSigners() []sdk.AccAddress {
 
 	// ensure any specified fee payer is included in the required signers (at the end)
 	feePayer := t.AuthInfo.Fee.Payer
+	if feePayer != "" {
+		fmt.Printf("tx.GetSigners(): Feepayer: %s\n", feePayer)
+	}
 	if feePayer != "" && !seen[feePayer] {
 		payerAddr := sdk.MustAccAddressFromBech32(feePayer)
 		signers = append(signers, payerAddr)
