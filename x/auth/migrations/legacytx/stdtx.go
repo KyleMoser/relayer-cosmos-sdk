@@ -1,6 +1,8 @@
 package legacytx
 
 import (
+	"fmt"
+
 	"github.com/cosmos/cosmos-sdk/codec/legacy"
 	codectypes "github.com/cosmos/cosmos-sdk/codec/types"
 	cryptotypes "github.com/cosmos/cosmos-sdk/crypto/types"
@@ -152,6 +154,7 @@ func (tx StdTx) GetSigners() []sdk.AccAddress {
 
 	for _, msg := range tx.GetMsgs() {
 		for _, addr := range msg.GetSigners() {
+			fmt.Printf("GetSigners(): Msg: %s, signer: %s\n", msg.String(), addr.String())
 			if !seen[addr.String()] {
 				signers = append(signers, addr)
 				seen[addr.String()] = true
