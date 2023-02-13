@@ -103,8 +103,9 @@ func (t *Tx) GetSigners() []sdk.AccAddress {
 	seen := map[string]bool{}
 
 	for _, msg := range t.GetMsgs() {
+
 		for _, addr := range msg.GetSigners() {
-			fmt.Printf("tx.GetSigners(): Msg: %s, Signer: %s\n", msg.String(), addr.String())
+			fmt.Printf("tx.GetSigners(): Msg type: %s, Signer: %s\n", sdk.MsgTypeURL(msg), addr.String())
 			if !seen[addr.String()] {
 				signers = append(signers, addr)
 				seen[addr.String()] = true
